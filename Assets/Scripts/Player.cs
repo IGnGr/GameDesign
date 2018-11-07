@@ -9,8 +9,8 @@ public class Player : MonoBehaviour {
     public float movementRatio;
     public float threshold;
     private float screenRatio;
-    public bool pressed = false;
-    private float holdTime = .5f;
+    private bool pressed = false;
+    public float holdTime = .1f;
     private float currentTime = 0;
 
 
@@ -18,6 +18,10 @@ public class Player : MonoBehaviour {
     void Start() {
         screenRatio = camera.aspect;
         //this.transform.localScale = new Vector3(6f  6f * screenRatio);
+    }
+
+    public bool isPressed() {
+        return pressed;
     }
 
     // Update is called once per frame
