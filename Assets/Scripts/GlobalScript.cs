@@ -9,6 +9,8 @@ public class GlobalScript : MonoBehaviour {
     public GameObject unionPrefab;
     public GameObject enemyPrefab;
     private bool bothHeld = false;
+    public bool debug = false;
+    private Vector3 size = new Vector3(10f,10f,10f);
 
 
     // Use this for initialization
@@ -33,11 +35,17 @@ public class GlobalScript : MonoBehaviour {
         GameObject enemy = Instantiate(enemyPrefab, randomPositionOffscreen, Quaternion.identity);
 
         //Size of the enemies
-        enemy.transform.localScale = new Vector3(10f, 10f, 10f);
+        enemy.transform.localScale = size;
 
+        //Adding movement
         enemy.GetComponent<Rigidbody>().AddForce(10000f, 0f, 0f);
 
+        enemy.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+        //Destroy after x time
         Destroy(enemy, 10f);
+
+
         //In order to keep spawning enemies, we call again the same method
         Invoke("SpawnEnemyMoving", 1f);
     }
@@ -53,7 +61,7 @@ public class GlobalScript : MonoBehaviour {
         GameObject enemy = Instantiate(enemyPrefab, randomPositionOnScreen, Quaternion.identity);
  
         //Size of the enemies
-        enemy.transform.localScale = new Vector3(10f, 10f, 10f);
+        enemy.transform.localScale = size;
 
         //In order to keep spawning enemies, we call again the same method
         Invoke("SpawnEnemyRandom", 1f);
@@ -114,8 +122,8 @@ public class GlobalScript : MonoBehaviour {
     void Update() {
 
         
-        bool circle1Held = circle1.GetComponent<Player>().isPressed();
-        bool circle2Held = circle2.GetComponent<Player>().isPressed();
+        bool circle1Held = circle1.GetComponent<Player>().isPressed() || debug;
+        bool circle2Held = circle2.GetComponent<Player>().isPressed() || debug;
 
         // Checks if both circles are held
         bothHeld = circle1Held && circle2Held;  
